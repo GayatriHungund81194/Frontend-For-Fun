@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript Practice Playground</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      color: white;
+      margin-bottom: 30px;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .panel {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+    }
+
+    .panel-header {
+      background: #667eea;
+      color: white;
+      padding: 15px 20px;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+
+    .panel-content {
+      padding: 20px;
+      height: 400px;
+      overflow-y: auto;
+    }
+
+    /* Exercise Selector */
+    .exercise-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .exercise-btn {
+      padding: 12px 15px;
+      border: 2px solid #e0e0e0;
+      background: white;
+      border-radius: 6px;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s;
+      font-size: 0.95rem;
+    }
+
+    .exercise-btn:hover {
+      border-color: #667eea;
+      background: #f5f5f5;
+    }
+
+    .exercise-btn.active {
+      background: #667eea;
+      color: white;
+      border-color: #667eea;
+    }
+
+    /* Exercise Description */
+    .exercise-description {
+      background: #f9f9f9;
+      padding: 15px;
+      border-radius: 6px;
+      margin-bottom: 15px;
+      border-left: 4px solid #667eea;
+    }
+
+    .exercise-description h3 {
+      color: #667eea;
+      margin-bottom: 8px;
+    }
+
+    .exercise-description p {
+      color: #555;
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+
+    /* Code Editor */
+    textarea {
+      width: 100%;
+      height: 350px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 12px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      resize: none;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    /* Console Output */
+    .console-output {
+      background: #1e1e1e;
+      color: #00ff00;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      padding: 15px;
+      border-radius: 6px;
+      min-height: 150px;
+      max-height: 300px;
+      overflow-y: auto;
+      line-height: 1.6;
+    }
+
+    .console-line {
+      margin: 5px 0;
+      word-break: break-word;
+    }
+
+    .console-error {
+      color: #ff6b6b;
+    }
+
+    .console-input {
+      color: #a0a0a0;
+    }
+
+    /* Expected Output */
+    .expected-output {
+      background: #f0f8f0;
+      border-left: 4px solid #4caf50;
+      padding: 15px;
+      border-radius: 6px;
+      margin-top: 10px;
+    }
+
+    .expected-output h4 {
+      color: #2e7d32;
+      margin-bottom: 8px;
+    }
+
+    .expected-output pre {
+      background: white;
+      padding: 10px;
+      border-radius: 4px;
+      overflow-x: auto;
+      color: #333;
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+    }
+
+    /* Buttons */
+    .button-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    button {
+      flex: 1;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .run-btn {
+      background: #4caf50;
+      color: white;
+    }
+
+    .run-btn:hover {
+      background: #45a049;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+    }
+
+    .clear-btn {
+      background: #f44336;
+      color: white;
+    }
+
+    .clear-btn:hover {
+      background: #da190b;
+    }
+
+    .hint-btn {
+      background: #2196f3;
+      color: white;
+    }
+
+    .hint-btn:hover {
+      background: #0b7dda;
+    }
+
+    /* Hint Box */
+    .hint-box {
+      background: #e3f2fd;
+      border-left: 4px solid #2196f3;
+      padding: 12px;
+      border-radius: 4px;
+      margin-top: 10px;
+      color: #1565c0;
+      display: none;
+    }
+
+    .hint-box.show {
+      display: block;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .main-grid {
+        grid-template-columns: 1fr;
+      }
+
+      header h1 {
+        font-size: 1.8rem;
+      }
+
+      .panel-content {
+        height: auto;
+        min-height: 400px;
+      }
+    }
+
+    /* Scrollbar styling */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #667eea;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #5568d3;
+    }
+
+    .footer {
+      text-align: center;
+      color: white;
+      margin-top: 30px;
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🚀 JavaScript Practice Playground</h1>
+      <p>Learn by doing! Try the exercises and see results instantly</p>
+    </header>
+
+    <div class="main-grid">
+      <!-- Left Panel: Exercises -->
+      <div class="panel">
+        <div class="panel-header">📝 Exercises</div>
+        <div class="panel-content">
+          <div class="exercise-list" id="exerciseList"></div>
+        </div>
+      </div>
+
+      <!-- Right Panel: Description & Code -->
+      <div class="panel">
+        <div class="panel-header">✍️ Your Code</div>
+        <div class="panel-content">
+          <div id="exerciseDescription"></div>
+          <textarea id="codeEditor" placeholder="Write your code here..."></textarea>
+          <div class="button-group">
+            <button class="run-btn" onclick="runCode()">▶️ Run Code</button>
+            <button class="clear-btn" onclick="clearCode()">🗑️ Clear</button>
+            <button class="hint-btn" onclick="toggleHint()">💡 Hint</button>
+          </div>
+          <div class="hint-box" id="hintBox"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Console Output -->
+    <div class="panel">
+      <div class="panel-header">📤 Console Output</div>
+      <div class="panel-content" style="height: auto; min-height: 200px;">
+        <div class="console-output" id="consoleOutput">
+          <div class="console-line">Ready to run code...</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <p>💡 Tip: Run your code and compare with expected output</p>
+    </div>
+  </div>
+
+  <script>
+    // Exercise data
+    const exercises = [
+      {
+        id: 1,
+        title: "1. Map - Double Numbers",
+        description: "Use .map() to double each number in the array",
+        code: `const numbers = [1, 2, 3, 4, 5];
+const doubled = numbers.map(n => n * 2);
+console.log(doubled);`,
+        expectedOutput: "[2, 4, 6, 8, 10]",
+        hint: "Use .map() with arrow function: n => n * 2"
+      },
+      {
+        id: 2,
+        title: "2. Filter - Even Numbers",
+        description: "Use .filter() to get only even numbers",
+        code: `const numbers = [1, 2, 3, 4, 5];
+const evens = numbers.filter(n => n % 2 === 0);
+console.log(evens);`,
+        expectedOutput: "[2, 4]",
+        hint: "Use n % 2 === 0 to check if even"
+      },
+      {
+        id: 3,
+        title: "3. Reduce - Sum Numbers",
+        description: "Use .reduce() to sum all numbers",
+        code: `const numbers = [1, 2, 3, 4, 5];
+const sum = numbers.reduce((total, n) => total + n, 0);
+console.log(sum);`,
+        expectedOutput: "15",
+        hint: "Start with 0, add each number to the total"
+      },
+      {
+        id: 4,
+        title: "4. Find - Find First Match",
+        description: "Use .find() to find the first number > 3",
+        code: `const numbers = [1, 2, 3, 4, 5];
+const found = numbers.find(n => n > 3);
+console.log(found);`,
+        expectedOutput: "4",
+        hint: ".find() returns the first item that matches, not an array"
+      },
+      {
+        id: 5,
+        title: "5. Objects - Add Property",
+        description: "Add a new property 'ingredients' to the recipe object",
+        code: `const recipe = {
+  name: "Cookies",
+  prepTime: 15,
+  servings: 12
+};
+recipe.ingredients = "flour, butter, sugar";
+console.log(recipe);`,
+        expectedOutput: "{name: 'Cookies', prepTime: 15, servings: 12, ingredients: 'flour, butter, sugar'}",
+        hint: "Use recipe.ingredients = '...' to add a property"
+      },
+      {
+        id: 6,
+        title: "6. Objects - Delete Property",
+        description: "Delete the 'servings' property from the recipe",
+        code: `const recipe = {
+  name: "Cookies",
+  prepTime: 15,
+  servings: 12
+};
+delete recipe.servings;
+console.log(recipe);`,
+        expectedOutput: "{name: 'Cookies', prepTime: 15}",
+        hint: "Use delete recipe.servings to remove a property"
+      },
+      {
+        id: 7,
+        title: "7. Destructuring - Get Values",
+        description: "Use destructuring to get name and prepTime from recipe",
+        code: `const recipe = {
+  name: "Cookies",
+  prepTime: 15,
+  servings: 12
+};
+const {name, prepTime} = recipe;
+console.log(name);
+console.log(prepTime);`,
+        expectedOutput: "Cookies\\n15",
+        hint: "Use const {name, prepTime} = recipe"
+      },
+      {
+        id: 8,
+        title: "8. Spread Operator - Copy Object",
+        description: "Create new object with spread operator + new property",
+        code: `const recipe = {
+  name: "Cookies",
+  prepTime: 15,
+  servings: 12
+};
+const updated = {...recipe, difficulty: "easy"};
+console.log(updated);`,
+        expectedOutput: "{name: 'Cookies', prepTime: 15, servings: 12, difficulty: 'easy'}",
+        hint: "Use {...recipe, difficulty: 'easy'} to copy and add"
+      },
+      {
+        id: 9,
+        title: "9. Arrow Function - Format Recipe",
+        description: "Create function that returns 'Cookies (15 mins)' format",
+        code: `const formatRecipe = (recipe) => \`\${recipe.name} (\${recipe.prepTime} mins)\`;
+
+const recipe = {name: "Cookies", prepTime: 15};
+console.log(formatRecipe(recipe));`,
+        expectedOutput: "Cookies (15 mins)",
+        hint: "Use template literal with backticks: \`...\${variable}...\`"
+      },
+      {
+        id: 10,
+        title: "10. Array Practice - Filter Recipes",
+        description: "Filter recipes with prepTime less than 30 minutes",
+        code: `const recipes = [
+  {name: "Cookies", prepTime: 15},
+  {name: "Cake", prepTime: 30},
+  {name: "Pie", prepTime: 45}
+];
+const quick = recipes.filter(r => r.prepTime < 30);
+console.log(quick);`,
+        expectedOutput: "[{name: 'Cookies', prepTime: 15}]",
+        hint: "Use .filter(r => r.prepTime < 30)"
+      }
+    ];
+
+    let currentExercise = null;
+
+    // Initialize
+    function initializePlayground() {
+      renderExerciseList();
+      selectExercise(0);
+    }
+
+    // Render exercise list
+    function renderExerciseList() {
+      const list = document.getElementById('exerciseList');
+      list.innerHTML = exercises.map((ex, index) => `
+        <button class="exercise-btn ${index === 0 ? 'active' : ''}" onclick="selectExercise(${index})">
+          ${ex.title}
+        </button>
+      `).join('');
+    }
+
+    // Select exercise
+    function selectExercise(index) {
+      currentExercise = exercises[index];
+      
+      // Update active button
+      document.querySelectorAll('.exercise-btn').forEach((btn, i) => {
+        btn.classList.toggle('active', i === index);
+      });
+
+      // Update description
+      const descDiv = document.getElementById('exerciseDescription');
+      descDiv.innerHTML = `
+        <div class="exercise-description">
+          <h3>${currentExercise.title}</h3>
+          <p>${currentExercise.description}</p>
+        </div>
+      `;
+
+      // Update code editor
+      document.getElementById('codeEditor').value = currentExercise.code;
+      
+      // Update hint
+      document.getElementById('hintBox').textContent = currentExercise.hint;
+      document.getElementById('hintBox').classList.remove('show');
+
+      // Clear console
+      clearConsole();
+    }
+
+    // Run code
+    function runCode() {
+      clearConsole();
+      const code = document.getElementById('codeEditor').value;
+      
+      if (!code.trim()) {
+        addConsoleOutput('No code to run!', 'error');
+        return;
+      }
+
+      addConsoleOutput('Running...', 'input');
+
+      try {
+        // Capture console.log
+        const logs = [];
+        const originalLog = console.log;
+        console.log = (...args) => {
+          logs.push(args.map(arg => {
+            if (typeof arg === 'object') {
+              return JSON.stringify(arg);
+            }
+            return String(arg);
+          }).join(' '));
+        };
+
+        // Run code
+        eval(code);
+
+        // Restore console.log
+        console.log = originalLog;
+
+        // Display output
+        logs.forEach(log => addConsoleOutput(log));
+
+        // Show expected output
+        showExpectedOutput();
+
+      } catch (error) {
+        addConsoleOutput(`Error: ${error.message}`, 'error');
+      }
+    }
+
+    // Add to console
+    function addConsoleOutput(text, type = 'normal') {
+      const output = document.getElementById('consoleOutput');
+      const line = document.createElement('div');
+      line.className = `console-line ${type === 'error' ? 'console-error' : type === 'input' ? 'console-input' : ''}`;
+      line.textContent = text;
+      output.appendChild(line);
+      output.scrollTop = output.scrollHeight;
+    }
+
+    // Clear console
+    function clearConsole() {
+      document.getElementById('consoleOutput').innerHTML = '<div class="console-line">Ready to run code...</div>';
+    }
+
+    // Clear code editor
+    function clearCode() {
+      if (currentExercise) {
+        document.getElementById('codeEditor').value = currentExercise.code;
+      } else {
+        document.getElementById('codeEditor').value = '';
+      }
+      clearConsole();
+      document.getElementById('hintBox').classList.remove('show');
+    }
+
+    // Toggle hint
+    function toggleHint() {
+      const hint = document.getElementById('hintBox');
+      hint.classList.toggle('show');
+    }
+
+    // Show expected output
+    function showExpectedOutput() {
+      const output = document.getElementById('consoleOutput');
+      const expected = document.createElement('div');
+      expected.className = 'console-line';
+      expected.innerHTML = '<br><strong>Expected Output:</strong> ' + currentExercise.expectedOutput;
+      output.appendChild(expected);
+    }
+
+    // Start!
+    initializePlayground();
+  </script>
+</body>
+</html>
