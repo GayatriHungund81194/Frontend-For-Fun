@@ -1,61 +1,75 @@
 # Frontend For Fun
 
-A fun and approachable frontend learning project built with Claude to help you practice JavaScript and explore core web development concepts.
+A small front-end learning project focused on JavaScript and DOM manipulation.
 
-## 🌟 What This Project Is
+This repo is designed as a beginner-friendly practice space for building simple interactive web pages. Each file introduces a small concept and gradually adds more functionality to a book tracker app.
 
-This workspace is a simple educational app and learning hub for beginners who want to:
+## Project Goals
 
-- practice JavaScript in an interactive playground
-- learn frontend basics in a clear, guided way
-- explore concepts through examples and notes
+- Learn HTML, CSS, and JavaScript basics
+- Practice manipulating the DOM with JavaScript
+- Build small interactive UI features step by step
+- Understand how to add, update, and delete items in a list
 
-It combines a hands-on playground with helpful learning resources so you can build confidence step by step.
+## Folder Structure
 
-## ✨ What’s Included
+```text
+Frontend-For-Fun/
+├── README.md
+├── javascript_playground.html
+├── javascript_primer.md
+└── Easy/
+    ├── 01_book_tracker_create.html
+    ├── 02_book_tracker_add_items.html
+    ├── 03_book_tracker_delete_items.html
+    ├── 04_book_tracker_update_items.html
+    ├── 05_book_tracker_update_author.html
+    └── 06_book_tracker_css_intro.html
+```
 
-- Interactive JavaScript practice playground
-- Beginner-friendly learning guide
-- JavaScript primer notes
-- A simple structure for studying and experimenting
+## How to Use
 
-## 📁 Project Files
+1. Open the project folder in a browser.
+2. Start with the first exercise in the Easy folder.
+3. Open each file one by one and compare how the JavaScript grows more advanced.
+4. Use the JavaScript primer to review core concepts.
+5. Use the JavaScript playground to test ideas and practice code snippets.
 
-- [JAVASCRIPT_PLAYGROUND.html](JAVASCRIPT_PLAYGROUND.html) — interactive practice page
-- [JAVASCRIPT_PRIMER.md](JAVASCRIPT_PRIMER.md) — JavaScript basics and concepts
-- [LEARNING_GUIDE.md](LEARNING_GUIDE.md) — structured learning path
-- [START_HERE.md](START_HERE.md) — recommended place to begin
-- [README.md](README.md) — basic project overview
+## Exercise Flow
 
-## 🚀 How to Use It
+### 01_book_tracker_create.html
+Introduces the basic HTML structure for a book tracker page.
 
-1. Open [JAVASCRIPT_PLAYGROUND.html](JAVASCRIPT_PLAYGROUND.html) in your browser.
-2. Start exploring the JavaScript exercises and practice ideas.
-3. Read [START_HERE.md](START_HERE.md) for the best learning flow.
-4. Use [LEARNING_GUIDE.md](LEARNING_GUIDE.md) and [JAVASCRIPT_PRIMER.md](JAVASCRIPT_PRIMER.md) to build your understanding.
+### 02_book_tracker_add_items.html
+Adds the ability to insert a book name into the page when the button is clicked.
 
-## 🛠️ Tech Stack
+### 03_book_tracker_delete_items.html
+Adds delete behavior so items can be removed from the list.
 
-This project is lightweight and simple:
+### 04_book_tracker_update_items.html
+Adds update/edit behavior to change existing book entries.
 
-- HTML
-- CSS
-- JavaScript
+### 05_book_tracker_update_author.html
+Extends the app with author name and rating fields.
 
-No complex setup is required to get started.
+### 06_book_tracker_css_intro.html
+Introduces CSS styling and better layout for the book items.
 
-## 🎯 Goals of This Project
+## JavaScript Resources
 
-The goal is to make frontend learning feel more fun, practical, and less overwhelming. It is designed for people who want to:
+- [javascript_primer.md](javascript_primer.md) contains a beginner-friendly JavaScript guide.
+- [javascript_playground.html](javascript_playground.html) is a small interactive sandbox for experimenting with JavaScript.
 
-- learn by doing
-- experiment with code
-- understand real concepts without too much complexity
+## Suggested Learning Order
 
-## 💡 Notes
+1. Read the primer
+2. Open 01_book_tracker_create.html
+3. Move through the exercises in order
+4. Practice in the playground
+5. Rebuild parts of the app on your own
 
-This app was created as a learning-focused project, and it is perfect for exploring ideas, practicing coding, and building confidence with web development.
+## Notes
 
-## 🙌 Built With
+These are simple static HTML files, so you can usually open them directly in a browser or run them with a local preview tool such as Live Server in VS Code.
 
-Built with Claude and designed to be a friendly starting point for learning frontend development.
+This project is intentionally beginner-focused and meant to help you understand the logic behind everyday front-end features.

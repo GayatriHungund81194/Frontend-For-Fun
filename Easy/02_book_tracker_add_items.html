@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Book Tracker</title>
+  <style>
+    body {
+      font-family: Arial;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
+    h1 {
+      color: #2c3e50;
+    }
+    input {
+      padding: 10px;
+      font-size: 16px;
+      width: 300px;
+    }
+    button {
+      background-color: #27ae60;
+      color: white;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #bookList {
+
+    }
+  </style>
+</head>
+<body>
+  <h1> My Books</h1>
+  
+  <input type="text" id="bookInput" placeholder="Enter book name">
+  <button id="addBtn">Add Book</button>
+  
+  <div id="bookList">
+  </div>
+
+  <script>
+    // Grab the important elements from the page so we can interact with them.
+    // We store them in variables so we can reuse them later without repeating code.
+    const button = document.getElementById("addBtn");
+    const input = document.getElementById("bookInput");
+    const bookList = document.getElementById("bookList");
+
+    // When the user clicks the Add Book button, run this code.
+    // This is the main action that adds a book to the page.
+    button.addEventListener("click", function() {
+      // Read the text the user typed into the input field.
+      // This is the value we want to display as a book title.
+      const bookName = input.value;
+
+      // Create a new container for one book item.
+      // We use a div because we want to place the title and delete button together.
+      const bookList = document.createElement("div");
+
+      // Create a text element for the book name.
+      // We set its text content to the value written by the user.
+      const bookText = document.createElement("span");
+      bookText.textContent = bookName;
+
+      // Create a delete button for this specific book item.
+      // It is created here so every new book gets its own delete button.
+      const deleteBtn = document.createElement("button");
+      deleteBtn.textContent = "Delete";
+
+      // Add the title and button inside the book container.
+      // appendChild means: put this element inside the parent element.
+      bookList.appendChild(bookText);
+      bookList.appendChild(deleteBtn);
+
+      // Add the whole new book row to the list container on the page.
+      // This is what makes the book appear on screen.
+      bookList.appendChild(newBook);
+
+      // Clear the input field after adding the book.
+      // This keeps the UI clean and lets the user type a new book right away.
+      input.value = "";
+    });
+  </script>
+</body>
+</html>

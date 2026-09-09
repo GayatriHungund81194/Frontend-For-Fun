@@ -294,6 +294,7 @@
     <header>
       <h1>🚀 JavaScript Practice Playground</h1>
       <p>Learn by doing! Try the exercises and see results instantly</p>
+      <p style="margin-top: 10px; font-size: 0.95rem; opacity: 0.95;">Concepts covered: arrays, objects, functions, strings, loops, conditionals, and more</p>
     </header>
 
     <div class="main-grid">
@@ -460,6 +461,76 @@ const quick = recipes.filter(r => r.prepTime < 30);
 console.log(quick);`,
         expectedOutput: "[{name: 'Cookies', prepTime: 15}]",
         hint: "Use .filter(r => r.prepTime < 30)"
+      },
+      {
+        id: 11,
+        title: "11. Conditionals - Quick Recipe",
+        description: "Use an if statement to decide if a recipe is quick to make",
+        code: `const prepTime = 20;
+let message = "";
+if (prepTime < 30) {
+  message = "Quick recipe";
+} else {
+  message = "Takes longer";
+}
+console.log(message);`,
+        expectedOutput: "Quick recipe",
+        hint: "Check whether prepTime is less than 30"
+      },
+      {
+        id: 12,
+        title: "12. Loops - Build a List",
+        description: "Use a for loop to create a list of doubled numbers",
+        code: `const result = [];
+for (let i = 1; i <= 3; i++) {
+  result.push(i * 2);
+}
+console.log(result);`,
+        expectedOutput: "[2, 4, 6]",
+        hint: "Start from 1, loop to 3, and push each doubled value"
+      },
+      {
+        id: 13,
+        title: "13. Strings - Check Recipe Name",
+        description: "Use string methods to test if a recipe name contains 'cake'",
+        code: `const recipeName = "Chocolate Cake";
+const containsCake = recipeName.toLowerCase().includes("cake");
+console.log(containsCake);`,
+        expectedOutput: "true",
+        hint: "Convert to lowercase and then use includes()"
+      },
+      {
+        id: 14,
+        title: "14. Functions - Greeting",
+        description: "Create a function that greets a user by name",
+        code: `function greet(name) {
+  return "Hello, " + name + "!";
+}
+console.log(greet("Maya"));`,
+        expectedOutput: "Hello, Maya!",
+        hint: "Return a string using the name parameter"
+      },
+      {
+        id: 15,
+        title: "15. Template Literals - Recipe Summary",
+        description: "Use template literals to create a recipe summary",
+        code: `const recipe = { name: "Soup", prepTime: 25 };
+const summary = \`${recipe.name} takes \${recipe.prepTime} minutes\`;
+console.log(summary);`,
+        expectedOutput: "Soup takes 25 minutes",
+        hint: "Use backticks and ${...} inside the string"
+      },
+      {
+        id: 16,
+        title: "16. Reduce - Find Longest Name",
+        description: "Use .reduce() to find the longest recipe name",
+        code: `const recipes = ["Cookies", "Chocolate Cake", "Pie"];
+const longest = recipes.reduce((longestName, name) => {
+  return name.length > longestName.length ? name : longestName;
+}, "");
+console.log(longest);`,
+        expectedOutput: "Chocolate Cake",
+        hint: "Compare each name length and keep the longest one"
       }
     ];
 

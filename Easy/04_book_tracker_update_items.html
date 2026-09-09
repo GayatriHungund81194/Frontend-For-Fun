@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Book Tracker</title>
+  <style>
+    /* CSS for body element - applies to everything inside body */
+    body {
+      font-family: Arial;
+      padding: 20px;  /* Space INSIDE the body */
+      background-color: #f5f5f5;
+    }
+
+    /* CSS for h1 heading */
+    h1 {
+      color: #2c3e50;
+    }
+
+    /* CSS for input boxes */
+    input {
+      padding: 10px;  /* Space INSIDE the input box */
+      font-size: 16px;
+      width: 300px;
+    }
+
+    /* CSS for ALL button elements - applies to every button */
+    button {
+      background-color: #27ae60;  /* Default green color */
+      color: white;
+      padding: 10px 20px;  /* 10px top/bottom, 20px left/right */
+      font-size: 16px;
+      border: none;  /* No border */
+      border-radius: 5px;  /* Rounded corners */
+      cursor: pointer;  /* Cursor becomes hand on hover */
+    }
+
+    /* ID selector (#) - targets ONE specific element with id="bookList" */
+    #bookList {
+      margin-top: 20px;  /* Space OUTSIDE above */
+      margin-bottom: 20px;  /* Space OUTSIDE below */
+    }
+
+    /* CLASS selector (.) - targets ALL elements with class="bookItem" */
+    .bookItem {
+      padding: 20px;  /* Space INSIDE each book card */
+      gap: 20px;  /* Space BETWEEN flex items (text and buttons) */
+      margin: 10px;  /* Space OUTSIDE between different book cards */
+      display: flex;  /* Arranges items side-by-side (not stacked) */
+      justify-content: space-between;  /* Pushes items to opposite ends */
+      align-items: center;  /* Vertically centers items on same line */
+    }
+  </style>
+</head>
+<body>
+  <h1>My Books</h1>
+  
+  <!-- Input box where user types book name -->
+  <input type="text" id="bookInput" placeholder="Enter book name">
+  
+  <!-- Add Book button -->
+  <button id="addBtn">Add Book</button>
+  
+  <!-- Container where all books will be added dynamically -->
+  <div id="bookList">
+  </div>
+
+  <script>
+    /* Get references to HTML elements by their IDs */
+    const button = document.getElementById("addBtn");
+    const input = document.getElementById("bookInput");
+    const bookList = document.getElementById("bookList");
+
+    /* When user clicks "Add Book" button, run this function */
+    button.addEventListener("click", function() {
+      /* Get the text user typed in the input box */
+      const bookName = input.value;
+      
+      /* Create a new div element to hold the book */
+      const bookItem = document.createElement("div");
+      
+      /* Give this div the class "bookItem" so CSS styles apply */
+      bookItem.className="bookItem";
+
+      /* Create a span element for the book name text */
+      const bookText = document.createElement("span");
+      
+      /* Put the book name in the span */
+      bookText.textContent = bookName;
+
+      /* Create a delete button */
+      const deleteBtn = document.createElement("button");
+      deleteBtn.textContent = "Delete";
+      deleteBtn.style.backgroundColor = "#e74c3c";  /* Red color for delete */
+
+      /* Create an update/edit button */
+      const updateBtn = document.createElement("button");
+      updateBtn.textContent = "Update";
+      updateBtn.style.backgroundColor = "#3498db";  /* Blue color for update */
+
+      /* Add book text to the book container */
+      bookItem.appendChild(bookText);
+      
+      /* Add update button to the book container */
+      bookItem.appendChild(updateBtn);
+      
+      /* Add delete button to the book container */
+      bookItem.appendChild(deleteBtn);
+
+      /* Add the entire book container to the page */
+      bookList.appendChild(bookItem);
+
+      /* Clear the input box so user can type another book */
+      input.value = "";
+
+      /* ===== DELETE FUNCTIONALITY ===== */
+      deleteBtn.addEventListener("click", function() {
+        /* Remove the entire book container from the page */
+        bookItem.remove();
+      });
+
+      /* ===== UPDATE/EDIT FUNCTIONALITY ===== */
+      updateBtn.addEventListener("click", function(){
+        /* Create an input box for editing */
+        const editInput = document.createElement("input");
+        editInput.type = "text";  /* Make it a text input */
+        editInput.value = bookText.textContent;  /* Put current name in it */
+
+        /* Replace the book name text with the editable input box */
+        bookItem.replaceChild(editInput, bookText);
+        
+        /* Make cursor appear in the input box automatically */
+        // editInput.focus();
+
+        /* When user presses a key in the input box */
+        editInput.addEventListener("keypress", function(event){
+          /* Check if the key pressed was Enter */
+          if (event.key == "Enter") {
+            /* Update the bookText with the new value from input */
+            bookText.textContent = editInput.value;
+            
+            /* Replace the input box back with the text */
+            bookItem.replaceChild(bookText, editInput);
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

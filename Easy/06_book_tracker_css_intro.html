@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Book Tracker</title>
+  <style>
+    body {
+      font-family: Arial;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
+    h1 {
+      color: #2c3e50;
+    }
+    input {
+      padding: 10px;
+      font-size: 16px;
+      width: 300px;
+    }
+    button {
+      background-color: #27ae60;
+      color: white;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #bookList {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    .bookItem {
+        padding: 20px;
+        gap: 20px;
+        margin: 10px;
+        display: flex;
+        justify-content: space-between;  
+        align-items: center;              
+    }
+  </style>
+</head>
+<body>
+  <h1> My Books</h1>
+  
+  <input type="text" id="bookInput" placeholder="Enter book name">
+  <button id="addBtn">Add Book</button>
+  
+  <div id="bookList">
+  </div>
+
+  <script>
+    const button = document.getElementById("addBtn");
+    const input = document.getElementById("bookInput");
+    const bookList = document.getElementById("bookList");
+
+    button.addEventListener("click", function() {
+      const bookName = input.value;
+      const bookItem = document.createElement("div");
+      bookItem.className="bookItem";
+
+      const bookText = document.createElement("span");
+      bookText.textContent = bookName;
+
+      const deleteBtn = document.createElement("button");
+      deleteBtn.textContent = "Delete";
+
+      bookItem.appendChild(bookText);
+      bookItem.appendChild(deleteBtn);
+
+      bookList.appendChild(bookItem);
+
+      input.value = "";
+    });
+  </script>
+</body>
+</html>

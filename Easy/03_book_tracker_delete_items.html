@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Book Tracker</title>
+  <style>
+    /* CSS for body - applies to everything inside body tag */
+    body {
+      font-family: Arial;
+      padding: 20px;  /* Space INSIDE the body tag */
+      background-color: #f5f5f5;
+    }
+
+    /* CSS for h1 - applies to all h1 tags */
+    h1 {
+      color: #2c3e50;
+    }
+
+    /* CSS for input boxes */
+    input {
+      padding: 10px;  /* Space inside the input box */
+      font-size: 16px;
+      width: 300px;
+    }
+
+    /* CSS for ALL buttons - applies to all button tags */
+    button {
+      background-color: #27ae60;  /* Green color */
+      color: white;  /* White text */
+      padding: 10px 20px;  /* 10px top/bottom, 20px left/right */
+      font-size: 16px;
+      border: none;  /* No border around button */
+      border-radius: 5px;  /* Rounded corners */
+      cursor: pointer;  /* Cursor changes to hand when you hover */
+    }
+
+    /* CSS for #bookList - the ID selector targets ONE specific element */
+    #bookList {
+      margin-top: 20px;  /* Space OUTSIDE above the bookList */
+      margin-bottom: 20px;  /* Space OUTSIDE below the bookList */
+    }
+
+    /* CSS for .bookItem - the CLASS selector targets ALL elements with class="bookItem" */
+    .bookItem {
+      background-color: white;  /* White background for each book card */
+      padding: 20px;  /* Space INSIDE each book card (around the content) */
+      gap: 20px;  /* Space BETWEEN flex items (text and button) */
+      margin: 10px;  /* Space OUTSIDE (between different book cards) */
+      display: flex;  /* Arranges items side-by-side (not stacked) */
+      justify-content: space-between;  /* Pushes text to left, button to right */
+      align-items: center;  /* Vertically centers items (same line) */
+      border-radius: 5px;  /* Rounded corners */
+    }
+  </style>
+</head>
+<body>
+  <h1>My Books</h1>
+  
+  <!-- Input box where user types book name -->
+  <input type="text" id="bookInput" placeholder="Enter book name">
+  
+  <!-- Button to add book -->
+  <button id="addBtn">Add Book</button>
+  
+  <!-- Container div where all books will be added -->
+  <div id="bookList">
+  </div>
+
+  <!-- JavaScript code -->
+  <script>
+    // Get the button element by its ID
+    const button = document.getElementById("addBtn");
+    
+    // Get the input element by its ID
+    const input = document.getElementById("bookInput");
+    
+    // Get the bookList container by its ID
+    const bookList = document.getElementById("bookList");
+
+    // Add an event listener - when button is clicked, run this function
+    button.addEventListener("click", function() {
+      // Get the text the user typed in the input box
+      const bookName = input.value;
+      
+      // Create a new div element (container for the book)
+      const bookItem = document.createElement("div");
+      
+      // Give this div the class "bookItem" so CSS styles apply to it
+      bookItem.className = "bookItem";
+
+      // Create a span element for the book name text
+      const bookText = document.createElement("span");
+      
+      // Put the book name text inside the span
+      bookText.textContent = bookName;
+
+      // Create a delete button
+      const deleteBtn = document.createElement("button");
+      
+      // Put "Delete" text on the button
+      deleteBtn.textContent = "Delete";
+
+      // Add the book text (span) inside the bookItem (div)
+      bookItem.appendChild(bookText);
+      
+      // Add the delete button inside the bookItem (div)
+      bookItem.appendChild(deleteBtn);
+
+      // Add the entire bookItem (with text + button) to the page
+      bookList.appendChild(bookItem);
+
+      // Clear the input box so user can type another book
+      input.value = "";
+    });
+  </script>
+</body>
+</html>
