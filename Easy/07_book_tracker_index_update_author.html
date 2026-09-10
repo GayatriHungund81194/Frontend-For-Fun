@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Book Tracker</title>
+  <style>
+    /* CSS for body element - applies to everything inside body */
+    body {
+      font-family: Arial;
+      padding: 20px;  /* Space INSIDE the body */
+      background-color: #f5f5f5;
+    }
+
+    /* CSS for h1 heading */
+    h1 {
+      color: #2c3e50;
+    }
+
+    /* CSS for input boxes */
+    input {
+      padding: 10px;  /* Space INSIDE the input box */
+      font-size: 16px;
+      width: 300px;
+      margin-right: 10px;
+      margin-bottom: 10px;
+    }
+
+    /* CSS for ALL button elements - applies to every button */
+    button {
+      background-color: #27ae60;  /* Default green color */
+      color: white;
+      padding: 10px 20px;  /* 10px top/bottom, 20px left/right */
+      font-size: 16px;
+      border: none;  /* No border */
+      border-radius: 5px;  /* Rounded corners */
+      cursor: pointer;  /* Cursor becomes hand on hover */
+    }
+
+    /* ID selector (#) - targets ONE specific element with id="bookList" */
+    #bookList {
+      margin-top: 20px;  /* Space OUTSIDE above */
+      margin-bottom: 20px;  /* Space OUTSIDE below */
+    }
+
+    /* CLASS selector (.) - targets ALL elements with class="bookItem" */
+    .bookItem {
+      background-color: white;
+      padding: 20px;  /* Space INSIDE each book card */
+      gap: 20px;  /* Space BETWEEN flex items (text and buttons) */
+      margin: 10px 0;  /* Space OUTSIDE between different book cards */
+      display: flex;  /* Arranges items side-by-side (not stacked) */
+      justify-content: space-between;  /* Pushes items to opposite ends */
+      align-items: center;  /* Vertically centers items on same line */
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>My Books</h1>
+  
+  <!-- Input box where user types book name -->
+  <input type="text" id="bookInput" placeholder="Enter book name">
+  
+  <!-- Input box where user types author name -->
+  <input type="text" id="authorInput" placeholder="Enter author name">
+  
+  <input type="number" id="ratingInput" placeholder="Rating (1-5)" min="1" max="5">
+  <!-- Add Book button -->
+  <button id="addBtn">Add Book</button>
+  
+  <!-- Container where all books will be added dynamically -->
+  <div id="bookList">
+  </div>
+
+  <script>
+    /* Get references to HTML elements by their IDs */
+    const button = document.getElementById("addBtn");
+    const input = document.getElementById("bookInput");
+    const authorInput = document.getElementById("authorInput");
+    const bookList = document.getElementById("bookList");
+    
+    /* When user clicks "Add Book" button, run this function */
+    button.addEventListener("click", function() {
+      /* Get the text user typed in the input boxes */
+      const bookName = input.value;
+      const authorName = authorInput.value;
+      const rating = document.getElementById("ratingInput").value;
+
+      
+      /* Create ONE container for the book (name + author together) */
+      const bookItem = document.createElement("div");
+      bookItem.className = "bookItem";
+
+      /* Create span for book name and author combined */
+      const bookText = document.createElement("span");
+      bookText.textContent = bookName + " by " + authorName;
+      bookText.textContent = bookName + " by " + authorName + " [Rating: " + rating + "/5]";
+
+      /* Create delete button */
+      const deleteBtn = document.createElement("button");
+      deleteBtn.textContent = "Delete";
+      deleteBtn.style.backgroundColor = "#e74c3c";  /* Red color for delete */
+
+      /* Create update button */
+      const updateBtn = document.createElement("button");
+      updateBtn.textContent = "Update";
+      updateBtn.style.backgroundColor = "#3498db";  /* Blue color for update */
+
+      /* Add everything to the book container */
+      bookItem.appendChild(bookText);
+      bookItem.appendChild(updateBtn);
+      bookItem.appendChild(deleteBtn);
+
+      /* Add the book container to the page */
+      bookList.appendChild(bookItem);
+
+      /* Clear both input boxes so user can add another book */
+      input.value = "";
+      authorInput.value = "";
+      document.getElementById("ratingInput").value = "";
+
+      /* ===== DELETE FUNCTIONALITY ===== */
+      deleteBtn.addEventListener("click", function() {
+        /* Remove the entire book container from the page */
+        bookItem.remove();
+      });
+
+      /* ===== UPDATE/EDIT FUNCTIONALITY ===== */
+      updateBtn.addEventListener("click", function(){
+        /* Create an input box for editing */
+        const editInput = document.createElement("input");
+        editInput.type = "text";  /* Make it a text input */
+        editInput.value = bookText.textContent;  /* Put current text in it */
+
+        /* Replace the book text with the editable input box */
+        bookItem.replaceChild(editInput, bookText);
+        
+        /* Make cursor appear in the input box automatically */
+        editInput.focus();
+
+        /* When user presses a key in the input box */
+        editInput.addEventListener("keypress", function(event){
+          /* Check if the key pressed was Enter */
+          if (event.key == "Enter") {
+            /* Update the bookText with the new value from input */
+            bookText.textContent = editInput.value;
+            
+            /* Replace the input box back with the text */
+            bookItem.replaceChild(bookText, editInput);
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
