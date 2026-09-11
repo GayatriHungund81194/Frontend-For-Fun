@@ -66,6 +66,7 @@
   <input type="number" id="ratingInput" placeholder="Rating (1-5)" min="1" max="5">
   <!-- Add Book button -->
   <button id="addBtn">Add Book</button>
+  <input type="text" id="searchInput" placeholder="Search books by name">
   
   <!-- Container where all books will be added dynamically -->
   <div id="bookList">
@@ -78,6 +79,28 @@
     const authorInput = document.getElementById("authorInput");
     const bookList = document.getElementById("bookList");
     
+    function searchBooks(searchTerm) {
+    const allBooks = document.querySelectorAll(".bookItem");
+    
+    allBooks.forEach(function(bookElement) {
+        const bookText = bookElement.textContent.toLowerCase();
+        const searchLower = searchTerm.toLowerCase();
+        
+        /* If search term is in book text, show it. Otherwise hide it */
+        if (bookText.includes(searchLower)) {
+        bookElement.style.display = "flex";  /* Show */
+        } else {
+        bookElement.style.display = "none";  /* Hide */
+        }
+    });
+    }
+
+    const searchInput = document.getElementById("searchInput");
+        searchInput.addEventListener("keyup", function() {
+        const searchTerm = searchInput.value;
+        searchBooks(searchTerm);
+    });
+
     function saveBookToLocalStorage(bookName, authorName, rating) {
         // get list of book if already existing if not return []
         let books = JSON.parse(localStorage.getItem("books")) || [];
@@ -97,6 +120,25 @@
         books.forEach(function(book){
             displayBook(book.bookName, book.authorName, book.rating);
         });
+    }
+
+    function updateBookInLocalStorage(oldBookName, newBookName) {
+        let books = JSON.parse(localStorage.getItem("books")) || [];
+        
+        /* Find and update the book */
+        books = books.map(function(book) {
+            if (book.bookName === oldBookName) {
+            /* Update just the name, keep author and rating same */
+            return {
+                bookName: newBookName,
+                authorName: book.authorName,
+                rating: book.rating
+            };
+            }
+            return book;
+        });
+        
+        localStorage.setItem("books", JSON.stringify(books));
     }
 
     function displayBook(bookName, authorName, bookRating) {
@@ -137,6 +179,8 @@
             if (event.key == "Enter") {
                 bookText.textContent = editInput.value;
                 bookItem.replaceChild(bookText, editInput);
+                const newBookName = editInput.value.split(" by ")[0];
+                updateBookInLocalStorage(bookName, newBookName);
             }
             });
         });
