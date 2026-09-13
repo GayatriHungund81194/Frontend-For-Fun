@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Tracker</title>
+  <!-- Link to external CSS file -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h1>My Books</h1>
+  
+  <!-- Input box where user types book name -->
+  <input type="text" id="bookInput" placeholder="Enter book name">
+  
+  <!-- Input box where user types author name -->
+  <input type="text" id="authorInput" placeholder="Enter author name">
+  
+  <!-- Input box for rating -->
+  <input type="number" id="ratingInput" placeholder="Rating (1-5)" min="1" max="5">
+  
+  <!-- Add Book button -->
+  <button id="addBtn">Add Book</button>
+  
+  <!-- Search input -->
+  <input type="text" id="searchInput" placeholder="Search books by name">
+  
+  <!-- Container where all books will be added dynamically -->
+  <div id="bookList">
+  </div>
+
+  <!-- Link to external JavaScript file -->
+  <script src="script.js"></script>
+</body>
+</html>

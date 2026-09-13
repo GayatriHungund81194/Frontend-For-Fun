@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Book Tracker</title>
+  <style>
+    /* CSS for body element - applies to everything inside body */
+    body {
+      font-family: Arial;
+      padding: 20px;  /* Space INSIDE the body */
+      background-color: #f5f5f5;
+    }
+
+    /* CSS for h1 heading */
+    h1 {
+      color: #2c3e50;
+    }
+
+    /* CSS for input boxes */
+    input {
+      padding: 10px;  /* Space INSIDE the input box */
+      font-size: 16px;
+      width: 300px;
+      margin-right: 10px;
+      margin-bottom: 10px;
+    }
+
+    /* CSS for ALL button elements - applies to every button */
+    button {
+      background-color: #27ae60;  /* Default green color */
+      color: white;
+      padding: 10px 20px;  /* 10px top/bottom, 20px left/right */
+      font-size: 16px;
+      border: none;  /* No border */
+      border-radius: 5px;  /* Rounded corners */
+      cursor: pointer;  /* Cursor becomes hand on hover */
+    }
+
+    /* ID selector (#) - targets ONE specific element with id="bookList" */
+    #bookList {
+      margin-top: 20px;  /* Space OUTSIDE above */
+      margin-bottom: 20px;  /* Space OUTSIDE below */
+    }
+
+    /* CLASS selector (.) - targets ALL elements with class="bookItem" */
+    .bookItem {
+        background-color: white;
+        padding: 20px;
+        gap: 20px;
+        margin: 10px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-radius: 5px;
+        
+        /* ADD THESE: */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  /* Subtle shadow */
+        border-left: 4px solid #3498db;             /* Blue accent bar */
+        transition: all 2.3s ease;                  /* Smooth transitions */
+    }
+  </style>
+</head>
+<body>
+  <h1>My Books</h1>
+  
+  <!-- Input box where user types book name -->
+  <input type="text" id="bookInput" placeholder="Enter book name">
+  
+  <!-- Input box where user types author name -->
+  <input type="text" id="authorInput" placeholder="Enter author name">
+  
+  <input type="number" id="ratingInput" placeholder="Rating (1-5)" min="1" max="5">
+  <!-- Add Book button -->
+  <button id="addBtn">Add Book</button>
+  <input type="text" id="searchInput" placeholder="Search books by name">
+  
+  <!-- Container where all books will be added dynamically -->
+  <div id="bookList">
+  </div>
+
+  <script>
+    // 1) Get the buttons, inputs, and list container from the page.
+    // These variables let us easily reuse the page elements later in the code.
+    const button = document.getElementById("addBtn");
+    const input = document.getElementById("bookInput");
+    const authorInput = document.getElementById("authorInput");
+    const bookList = document.getElementById("bookList");
+
+    // Search/filter logic:
+    // This checks every book card and hides the ones that do not include the typed text.
+    function searchBooks(searchTerm) {
+      const allBooks = document.querySelectorAll(".bookItem");
+
+      allBooks.forEach(function(bookElement) {
+        const bookText = bookElement.textContent.toLowerCase();
+        const searchLower = searchTerm.toLowerCase();
+
+        // If the search text is found inside the item, show it.
+        // Otherwise, hide it with display: none.
+        if (bookText.includes(searchLower)) {
+          bookElement.style.display = "flex";
+        } else {
+          bookElement.style.display = "none";
+        }
+      });
+    }
+
+    // Listen for typing in the search box and filter the list live.
+    const searchInput = document.getElementById("searchInput");
+    searchInput.addEventListener("keyup", function() {
+      const searchTerm = searchInput.value;
+      searchBooks(searchTerm);
+    });
+
+    // Save the new book to browser storage so it remains even after refresh.
+    function saveBookToLocalStorage(bookName, authorName, rating) {
+      // Read the saved books or create an empty array if nothing exists yet.
+      let books = JSON.parse(localStorage.getItem("books")) || [];
+
+      // Add the new book object to the array.
+      books.push({
+        bookName,
+        authorName,
+        rating
+      });
+
+      // Store the updated array back in localStorage as text.
+      localStorage.setItem("books", JSON.stringify(books));
+    }
+
+    // On page load, read all saved books and display them again.
+    function loadBooksFromLocalStorage() {
+      let books = JSON.parse(localStorage.getItem("books")) || [];
+      books.forEach(function(book) {
+        displayBook(book.bookName, book.authorName, book.rating);
+      });
+    }
+
+    // Update a saved book name while keeping the same author and rating.
+    function updateBookInLocalStorage(oldBookName, newBookName) {
+      let books = JSON.parse(localStorage.getItem("books")) || [];
+
+      books = books.map(function(book) {
+        if (book.bookName === oldBookName) {
+          return {
+            bookName: newBookName,
+            authorName: book.authorName,
+            rating: book.rating
+          };
+        }
+        return book;
+      });
+
+      localStorage.setItem("books", JSON.stringify(books));
+    }
+
+    // Create a book card on the page.
+    // This function makes one book item with its text and action buttons.
+    function displayBook(bookName, authorName, bookRating) {
+      const bookItem = document.createElement("div");
+      bookItem.className = "bookItem";
+
+      const bookText = document.createElement("span");
+      bookText.textContent = bookName + " by " + authorName + " [Rating: " + bookRating + "/5]";
+
+      const deleteBtn = document.createElement("button");
+      deleteBtn.textContent = "Delete";
+      deleteBtn.style.backgroundColor = "#e74c3c";
+
+      const updateBtn = document.createElement("button");
+      updateBtn.textContent = "Update";
+      updateBtn.style.backgroundColor = "#3498db";
+
+      // Add the text and buttons into the card.
+      bookItem.appendChild(bookText);
+      bookItem.appendChild(updateBtn);
+      bookItem.appendChild(deleteBtn);
+
+      // Add the complete card to the list container.
+      bookList.appendChild(bookItem);
+
+      // Delete button removes the card from the page and storage.
+      deleteBtn.addEventListener("click", function() {
+        bookItem.remove();
+        deleteBookFromLocalStorage(bookName);
+      });
+
+      // Update button turns the text into an input so the user can edit it.
+      updateBtn.addEventListener("click", function() {
+        const editInput = document.createElement("input");
+        editInput.type = "text";
+        editInput.value = bookText.textContent;
+
+        bookItem.replaceChild(editInput, bookText);
+        editInput.focus();
+
+        editInput.addEventListener("keypress", function(event) {
+          if (event.key == "Enter") {
+            bookText.textContent = editInput.value;
+            bookItem.replaceChild(bookText, editInput);
+
+            const newBookName = editInput.value.split(" by ")[0];
+            updateBookInLocalStorage(bookName, newBookName);
+          }
+        });
+      });
+    }
+
+    // Delete a book from localStorage by removing the matching name.
+    function deleteBookFromLocalStorage(bookNameToDelete) {
+      let books = JSON.parse(localStorage.getItem("books")) || [];
+
+      books = books.filter(function(book) {
+        return book.bookName !== bookNameToDelete;
+      });
+
+      localStorage.setItem("books", JSON.stringify(books));
+    }
+
+    // When the user clicks Add Book, read inputs, show the book, and persist it.
+    button.addEventListener("click", function() {
+      const bookName = input.value;
+      const authorName = authorInput.value;
+      const rating = document.getElementById("ratingInput").value;
+
+      displayBook(bookName, authorName, rating);
+      saveBookToLocalStorage(bookName, authorName, rating);
+
+      // Clear the form after adding a book so the user can add another one.
+      input.value = "";
+      authorInput.value = "";
+      document.getElementById("ratingInput").value = "";
+    });
+
+    // Load saved books as soon as the page starts.
+    loadBooksFromLocalStorage();
+  </script>
+</body>
+</html>
